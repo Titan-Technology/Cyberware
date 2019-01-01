@@ -7,6 +7,8 @@ using namespace cv;
 int main(){
   VideoCapture vid(0);
   Mat img;
+  if(!vid.isOpened())
+        return 0;
 
   Rect r = Rect(10,20,250,20);
   
@@ -44,10 +46,9 @@ int main(){
 
   Rect r2 = Rect(10,40,200,10);
   Rect r3 = Rect(10,60,200,10);
-  //create a Rect with top-left vertex at (10,20), of width 40 and height 60 pixels.
-  while(1)
+  for(;;)
     {
-      vid.read(img);
+      vid >> img;
       rectangle(img,r,Scalar(0,0,255),3,8,0);
       //Health Bar
       rectangle(img,r0,Scalar(0,0,255),3,8,0);
@@ -84,8 +85,9 @@ int main(){
   
       rectangle(img,r2,Scalar(255,0,0),3,8,0);
       rectangle(img,r3,Scalar(255,0,0),3,8,0);
-      //draw the rect defined by r with line thickness 1 and Blue color
       imshow("Webcam", img);
+      if( waitKey(10) == 27 )
+            break;
     }
   //imwrite("myImageWithRect.jpg",img);
   return 0;
